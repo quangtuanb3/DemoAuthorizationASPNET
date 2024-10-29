@@ -1,0 +1,53 @@
+﻿@page
+@model BookManagement.Pages.Admin.Users.IndexModel
+
+
+@{
+    ViewData["Title"] = "User Management";
+}
+
+
+<h1>User Management</h1>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Email</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Nationality</th>
+            <th scope="col">Roles</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var userWithRoles in Model.UsersWithRoles)
+        {
+            <tr>
+                <td>@userWithRoles.User.Id</td>
+                <td>@userWithRoles.User.Email</td>
+                <td>@(userWithRoles.User.DateOfBirth?.ToString("yyyy-MM-dd") ?? "Not provided")</td>
+                <td>@(userWithRoles.User.Nationality ?? "Not provided")</td>
+                <td>
+                    @if (userWithRoles.Roles.Any())
+                    {
+                        <ul class="list-unstyled mb-0">
+                            @foreach (var role in userWithRoles.Roles)
+                            {
+                                <li>@role</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span>No roles assigned</span>
+                    }
+                </td>
+                <td>
+                    <a asp-page="/Admin/Users/Edit" asp-route-id="@userWithRoles.User.Id" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-page="/Admin/Users/Block" asp-route-id="@userWithRoles.User.Id" class="btn btn-sm btn-danger">Block</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

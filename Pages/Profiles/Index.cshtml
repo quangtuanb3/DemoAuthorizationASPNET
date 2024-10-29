@@ -1,0 +1,47 @@
+﻿@page
+@model BookManagement.Pages.Profiles.IndexModel
+
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<h1>User Profile</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<a class="btn btn-primary ps-3 pe-3 m-4" asp-page="./Edit">Edit</a>
+<div class="card mb-3">
+    <div class="card-header">
+        <h5 class="card-title">User Information</h5>
+    </div>
+    <div class="card-body">
+        <p class="card-text"><strong>ID:</strong> @Model.CurrentUser.Id</p>
+        <p class="card-text"><strong>Email:</strong> @Model.CurrentUser.Email</p>
+        <p class="card-text"><strong>Nationality:</strong> @(Model.CurrentUser.Nationality ?? "Not provided")</p>
+        <p class="card-text"><strong>Date of Birth:</strong> @(Model.CurrentUser.DateOfBirth?.ToString("yyyy-MM-dd") ?? "Not provided")</p>
+
+        <hr />
+
+        <h6 class="card-subtitle mb-2 text-muted">Roles:</h6>
+        @if (Model.CurrentUser.Roles.Any())
+        {
+            <ul class="list-group list-group-flush">
+                @foreach (var role in Model.CurrentUser.Roles)
+                {
+                    <li class="list-group-item">@role</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="card-text">No roles assigned</p>
+        }
+    </div>
+    <div class="card-footer text-muted">
+        <small>Last updated: @DateTime.Now</small>
+    </div>
+</div>
