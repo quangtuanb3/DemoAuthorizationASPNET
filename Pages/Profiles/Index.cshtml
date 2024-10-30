@@ -23,7 +23,7 @@
         <p class="card-text"><strong>Email:</strong> @Model.CurrentUser.Email</p>
         <p class="card-text"><strong>Nationality:</strong> @(Model.CurrentUser.Nationality ?? "Not provided")</p>
         <p class="card-text"><strong>Date of Birth:</strong> @(Model.CurrentUser.DateOfBirth?.ToString("yyyy-MM-dd") ?? "Not provided")</p>
-
+        <p class="card-text"><strong>Account Status:</strong> @(Model.CurrentUser.Status ?? "Not provided") </p>
         <hr />
 
         <h6 class="card-subtitle mb-2 text-muted">Roles:</h6>

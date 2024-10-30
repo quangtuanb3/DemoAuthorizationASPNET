@@ -5,7 +5,8 @@ public record CurrentUser(
     string Email,
     IEnumerable<string> Roles,
     string? Nationality,
-    DateOnly? DateOfBirth
+    DateOnly? DateOfBirth,
+    string? Status
     )
 {
     public bool IsInRole(string role) => Roles.Contains(role);

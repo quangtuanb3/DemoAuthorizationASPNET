@@ -36,18 +36,21 @@ namespace BookManagement.Pages.Admin.Users
             if (user == null) return NotFound("User not found.");
 
             Input.UserId = user.Id;
-            Input.Email = user.Email;
+            Input.Email = user.Email!;
             Input.SelectedRoles = (List<string>)await _userManager.GetRolesAsync(user);
 
             // Get all available roles
-            AvailableRoles = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
+            AvailableRoles = await _roleManager.Roles
+                                    .Where(r => r.Name != null)
+                                    .Select(r => r.Name!)
+                                    .ToListAsync();
 
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.FindByIdAsync(Input.UserId);
+            var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null) return NotFound("User not found.");
 
             var currentRoles = await _userManager.GetRolesAsync(user);

@@ -7,37 +7,41 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BookManagement.Data;
 using BookManagement.Models;
+using Microsoft.AspNetCore.Authorization;
+using BookManagement.Authorization;
 
-namespace BookManagement.Pages.Books
+namespace BookManagement.Pages.Books;
+
+[Authorize]
+[Authorize(PolicyNames.NonBlocking)]
+[Authorize(PolicyNames.AtLeast18)]
+public class DetailsModel : PageModel
 {
-    public class DetailsModel : PageModel
+    private readonly BookManagement.Data.ApplicationDbContext _context;
+
+    public DetailsModel(BookManagement.Data.ApplicationDbContext context)
     {
-        private readonly BookManagement.Data.ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public DetailsModel(BookManagement.Data.ApplicationDbContext context)
+    public Book Book { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        public Book Book { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        var book = await _context.Books.FirstOrDefaultAsync(m => m.Id == id);
+        if (book == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var book = await _context.Books.FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Book = book;
-            }
-            return Page();
+            return NotFound();
         }
+        else
+        {
+            Book = book;
+        }
+        return Page();
     }
 }

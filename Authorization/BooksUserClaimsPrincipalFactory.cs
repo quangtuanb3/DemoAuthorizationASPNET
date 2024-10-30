@@ -23,7 +23,10 @@ public class BooksUserClaimsPrincipalFactory(UserManager<ApplicationUser> userMa
         {
             id.AddClaim(new Claim(AppClaimTypes.DateOfBirth, user.DateOfBirth.Value.ToString("yyyy-MM-dd")));
         }
-
+        if (user.Status != null)
+        {
+            id.AddClaim(new Claim(AppClaimTypes.UserStatus, user.Status));
+        }
         return new ClaimsPrincipal(id);
 
     }

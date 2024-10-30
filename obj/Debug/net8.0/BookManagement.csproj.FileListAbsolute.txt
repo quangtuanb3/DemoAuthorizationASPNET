@@ -268,3 +268,4 @@ D:\NET\BookManagement\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 D:\NET\BookManagement\bin\Debug\net8.0\MailKit.dll
 D:\NET\BookManagement\bin\Debug\net8.0\MimeKit.dll
 D:\NET\BookManagement\bin\Debug\net8.0\Bogus.dll
+D:\NET\BookManagement\obj\Debug\net8.0\BookManagement.sourcelink.json

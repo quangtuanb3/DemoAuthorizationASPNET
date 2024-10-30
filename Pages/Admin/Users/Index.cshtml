@@ -45,7 +45,16 @@
                 </td>
                 <td>
                     <a asp-page="/Admin/Users/Edit" asp-route-id="@userWithRoles.User.Id" class="btn btn-sm btn-primary">Edit</a>
-                    <a asp-page="/Admin/Users/Block" asp-route-id="@userWithRoles.User.Id" class="btn btn-sm btn-danger">Block</a>
+                    @if (userWithRoles.User.Status == "Blocked")
+                    {
+                        <a asp-page="/Admin/Users/Block" asp-route-id="@userWithRoles.User.Id" class="btn btn-sm btn-success">Unblock</a>
+                    }
+                    else
+                    {
+                        <a asp-page="/Admin/Users/Block" asp-route-id="@userWithRoles.User.Id" class="btn btn-sm btn-danger">
+                            Block
+                        </a>
+                    }
                 </td>
             </tr>
         }

@@ -10,6 +10,8 @@
     <h4>@Model.Input.Email</h4>
     <form method="post">
         <div class="form-group">
+            <input type="hidden" asp-for="Input.UserId" />
+            <input type="hidden" asp-for="Input.Email" />
             <label asp-for="Input.SelectedRoles" class="control-label">Assign Roles</label>
             <select asp-for="Input.SelectedRoles" class="form-control select2" multiple="multiple" asp-items="@(new SelectList(Model.AvailableRoles))">
                 <option value="">Select Roles</option>

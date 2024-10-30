@@ -9,6 +9,7 @@ using BookManagement.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,19 +29,24 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddClaimsPrincipalFactory<BooksUserClaimsPrincipalFactory>()
 .AddDefaultTokenProviders();
 
-
-
 builder.Services.AddAuthorizationBuilder()
           .AddPolicy(PolicyNames.HasNationality,
               builder => builder.RequireClaim(AppClaimTypes.Nationality, "VietNam", "Japan"))
           .AddPolicy(PolicyNames.AtLeast18,
-              builder => builder.AddRequirements(new MinimumAgeRequirement(18)));
+              builder => builder.AddRequirements(new MinimumAgeRequirement(18)))
+          .AddPolicy(PolicyNames.NonBlocking,
+              builder => builder.AddRequirements(new NonBlockingRequirement(new List<string> { "Activate" })));
+//builder => builder.RequireClaim(AppClaimTypes.UserStatus, "Activate"));
+
+builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
+
+builder.Services.AddScoped<IAuthorizationHandler, NonBlockingRequirementHandler>();
 builder.Services.AddScoped<IUserContext, UserContext>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<InitialSeeder>();
 builder.Services.AddScoped<BookAuthorizationService>();
 builder.Services.AddAuthorization();
-
+builder.Logging.AddConsole();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

@@ -13,7 +13,7 @@ using BookManagement.Authorization;
 
 namespace BookManagement.Pages.Books
 {
-    [Authorize(Policy = PolicyNames.HasNationality)]
+    //[Authorize(Policy = PolicyNames.HasNationality)]
     public class CreateModel : PageModel
     {
         private readonly BookManagement.Data.ApplicationDbContext _context;

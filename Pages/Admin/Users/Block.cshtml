@@ -1,0 +1,35 @@
+﻿@page
+@model BookManagement.Pages.Admin.Users.BlockModel
+@{
+    ViewData["Title"] = "Block User";
+}
+
+<h1>Block User</h1>
+
+@if (Model.UserToBlock != null)
+{
+    <div class="card mb-4" style="width: 24rem;">
+        <div class="card-header bg-warning text-white">
+            <h5 class="card-title">User Information</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text"><strong>User ID:</strong> @Model.UserToBlock.Id</p>
+            <p class="card-text"><strong>Username:</strong> @Model.UserToBlock.UserName</p>
+            <p class="card-text"><strong>Email:</strong> @Model.UserToBlock.Email</p>
+            <p class="card-text"><strong>Status:</strong> @Model.UserToBlock.Status</p>
+        </div>
+        <div class="card-footer">
+            <form method="post">
+                <button type="submit" class="btn @(Model.UserToBlock?.Status == "Blocked" ? "btn-success" : "btn-danger") w-100">
+                    @(Model.UserToBlock?.Status == "Blocked" ? "Unblock User" : "Block User")
+                </button>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        User not found.
+    </div>
+}

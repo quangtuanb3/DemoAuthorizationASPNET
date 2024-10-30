@@ -22,7 +22,6 @@ internal class MinimumAgeRequirementHandler(ILogger<MinimumAgeRequirementHandler
             context.Fail();
             return Task.CompletedTask;
         }
-
         if (currentUser.DateOfBirth.Value.AddYears(requirement.MinimumAge) <= DateOnly.FromDateTime(DateTime.Today))
         {
             logger.LogInformation("Authorization succeeded");
